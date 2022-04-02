@@ -156,20 +156,13 @@ fi
 
 sortkey=1
 
-while IFS='|' read -r city country timezone country_code telephone_code favourite
+while IFS='|' read -r city country timezone country_code favourite
     do
 
     # skip comment line
     if [[ "$city" =~ ^[[:space:]]*\# ]]
     then
         continue
-    fi
-
-    if [[ -n "$telephone_code" ]]
-    then
-        telephone_code_string=" (+$telephone_code)"
-    else
-        telephone_code_string=""
     fi
 
     if [[ "$favourite" == "0" ]]
@@ -225,8 +218,8 @@ while IFS='|' read -r city country timezone country_code telephone_code favourit
         match=1
         echo "<!--$sortkey-->\
               <item arg=\"$city, $city_time\" valid=\"yes\">\
-                  <title>$sourceTimezone_string$city: $city_time</title>\
-                  <subtitle>$favourite_string on $city_date • ${country}${telephone_code_string} • Timezone: $timezone</subtitle>\
+                  <title>$sourceTimezone_string$city_time $city</title>\
+                  <subtitle>$favourite_string on $city_date • ${country} • $timezone</subtitle>\
                   <icon>./flags/$flag_icon</icon>\
               </item>"
     fi

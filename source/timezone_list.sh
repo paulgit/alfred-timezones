@@ -156,24 +156,16 @@ fi
 
 sortkey=1
 
-while IFS='|' read -r city country timezone country_code favourite
+while IFS='|' read -r city region country timezone country_code favourite
     do
 
-    # skip comment line
-    if [[ "$city" =~ ^[[:space:]]*\# ]]
-    then
-        continue
-    fi
-
-    if [[ "$favourite" == "0" ]]
-    then
-        favourite_string="⭐️ •"
+    if [[ "$favourite" == "0" ]]; then
+        favourite_string="⭐️"
     else
         favourite_string=""	
     fi
     
-    if [ "$timezone" = "$timezoneToConvert" ]
-    then
+    if [ "$timezone" = "$timezoneToConvert" ]; then
         sourceTimezone_string="👉 "
     else
         sourceTimezone_string=""
@@ -184,12 +176,10 @@ while IFS='|' read -r city country timezone country_code favourite
     # UTC hours needs swap the sign (minus)->(plus) and vice-versa
     timezoneOpposite="$timezone"
 
-    if [[ "$timezone" == *UTC-* ]]
-    then   
+    if [[ "$timezone" == *UTC-* ]]; then   
         timezoneOpposite="${timezone/-/+}"
-    elif [[ "$timezone" == *UTC+* ]]
-    then
-            timezoneOpposite="${timezone/+/-}"
+    elif [[ "$timezone" == *UTC+* ]]; then
+        timezoneOpposite="${timezone/+/-}"
     fi
 
     city_time=$(TZ=$timezoneOpposite date $setTimeOptionArguments +"$TIME_FORMAT_STR")
@@ -204,8 +194,7 @@ while IFS='|' read -r city country timezone country_code favourite
 
     # It shall be possible to disable sorting
     # in fact, it means we're assiging an incremaental sort key
-    if [[ ! "$SORTING" == "n" ]]
-    then
+    if [[ ! "$SORTING" == "n" ]]; then
         # we start the output with a sort key to simply pipe the result to 'sort'
         # we sort first by favourite, second by time ascending, third by city name
         sortkey=$favourite$(TZ=$timezone date $setTimeOptionArguments +%Y%m%d%H%M )"$city"
@@ -213,18 +202,24 @@ while IFS='|' read -r city country timezone country_code favourite
         sortkey=$(printf "%03d" $(( 10#$sortkey + 1 )))
     fi
 
-    if [[ "$CLIPBOARD_DATE" == "Off" ]]
-    then
-        ITEM_ARG="$city_time ($city)"
+    if [[ "$city" == "$region" ]] || [[ -z $region ]]; then
+        item_title="$sourceTimezone_string$city_time $city $favourite_string"
     else
-        ITEM_ARG="$city_date, $city_time ($city)"
+        item_title="$sourceTimezone_string$city_time $city, $region $favourite_string"  
     fi
+
+    if [[ "$CLIPBOARD_DATE" == "Off" ]]; then
+        item_arg="|$city_time|$city|$region|$country|"
+    else
+        item_arg="$city_date|$city_time|$city|$region|$country|"
+    fi
+
     if [[ "$city" =~ ${city_search:-.} ]]; then
         match=1
         echo "<!--$sortkey-->\
-              <item arg=\"$ITEM_ARG\" valid=\"yes\">\
-                  <title>$sourceTimezone_string$city_time $city</title>\
-                  <subtitle>$favourite_string on $city_date • ${country} • $timezone</subtitle>\
+              <item arg=\"$item_arg\" valid=\"yes\">\
+                  <title>$item_title</title>\
+                  <subtitle>$city_date • ${country} • $timezone</subtitle>\
                   <icon>./flags/$flag_icon</icon>\
               </item>"
     fi

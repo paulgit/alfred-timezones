@@ -27,7 +27,7 @@ then
 		region=$(echo "$line" | awk -F',' '{print $8}' | sed -e 's|["'\'']||g' )
 		timezone=$(echo "$line" | awk -F',' '{print $13}' | sed -e 's|["'\'']||g' )
 
-		echo '<item arg="'$country'|'$country_code'|'$city_retrieved'|'$timezone'" valid="yes">
+		echo '<item arg="'$country'|'$country_code'|'$region'|'$city_retrieved'|'$timezone'" valid="yes">
 		<title>'$city_retrieved", "$region'</title>	
 		<subtitle>'$country' ('$country_code') , Timezone:' $timezone'</subtitle>
 		</item>'

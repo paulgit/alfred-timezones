@@ -1,12 +1,8 @@
 source includes.sh
 
-search="$1"	#Alfred argument
-
-# searchip off time, e.g. in New York, 7:20
-# searching passed: 7:20 (New York)
-# extract City from the braces
-search=${search#*(}
-search=${search%)*}
+search_city=$1
+search_region=$2
+search_country=$3
 
 tmp_timezone_file="${timezone_file}.tmp"
 
@@ -19,9 +15,9 @@ while IFS= read -r line
 	IFS='|'		#Split stored line by delimiter
 	data=($line)	#Create array
 	city="${data[0]}"
-	country="${data[1]}"
-	timezone="${data[2]}"
-    country_abbr="${data[3]}"
+    region="${data[1]}"
+	country="${data[2]}"
+	timezone="${data[3]}"
 	country_code="${data[4]}"
 	favourite="${data[5]}"
 
@@ -29,25 +25,27 @@ while IFS= read -r line
         favourite="1"
     fi
 
-	if [[ "$city" == "$search"* ]]; then
+	if [[ "$city" == "$search_city" ]] && [[ "$region" == "$search_region" ]] && [[ "$country" == "$search_country" ]]; then
         if [[ "${favourite}" == "0" ]]; then
             favourite="1"
         else
             favourite="0"
         fi
         selected_city="$city"
+        selected_region="$region"
+        selected_country="$country"
         selected_fav="$favourite"
     fi
 
-    echo "$city|$country|$timezone|$country_abbr|$country_code|$favourite" >> "${tmp_timezone_file}"
+    echo "$city|$region|$country|$timezone|$country_code|$favourite" >> "${tmp_timezone_file}"
 
 done < "$timezone_file"
 
 if [[ "$selected_fav" == "1" ]]
 then
-    echo "$selected_city has been un-pinned to the top of your list!"
+    echo "$selected_city, $selected_region, $selected_country has been un-pinned to the top of your list!"
 else
-    echo "$selected_city has been pinned from the top of your list!"
+    echo "$selected_city, $selected_region, $selected_country has been pinned from the top of your list!"
 fi
 
 cat "${tmp_timezone_file}" > "${timezone_file}"

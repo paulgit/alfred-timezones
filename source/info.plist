@@ -336,7 +336,7 @@
 				<key>modifiers</key>
 				<integer>524288</integer>
 				<key>modifiersubtext</key>
-				<string>Remove this locale</string>
+				<string>Remove this city</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -346,7 +346,7 @@
 				<key>modifiers</key>
 				<integer>1048576</integer>
 				<key>modifiersubtext</key>
-				<string>Toggle Favourite flag for this city</string>
+				<string>Toggle pinning this city to the top of the list</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -383,9 +383,23 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string>echo "{query}"</string>
+				<string>OIFS=$IFS
+IFS='|'
+arg=($1)
+IFS=$OIFS
+
+time=${arg[1]}
+city=${arg[2]}
+region=${arg[3]}
+country=${arg[4]}
+
+if [[ "$city" == "$region" ]] || [[ -z $region ]]; then
+	echo "$time ($city, $country)"
+else
+	echo "$time ($city, $region, $country)"
+fi</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>type</key>
@@ -509,7 +523,7 @@
 				<key>title</key>
 				<string>Time copied to clipboard!</string>
 			</dict>
-				<key>type</key>
+			<key>type</key>
 			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
 			<string>E9C3767A-C20A-4934-BB66-83416A567C96</string>
@@ -545,9 +559,13 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string>./remove_city.sh "{query}"</string>
+				<string>OIFS=$IFS
+IFS='|'
+arg=($1)
+IFS=$OIFS
+./remove_city.sh "${arg[2]}" "${arg[3]}" "${arg[4]}"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>type</key>
@@ -568,9 +586,13 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string>./toggle_fav_city.sh "{query}"</string>
+				<string>OIFS=$IFS
+IFS='|'
+arg=($1)
+IFS=$OIFS
+./toggle_fav_city.sh "${arg[2]}" "${arg[3]}" "${arg[4]}"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>type</key>

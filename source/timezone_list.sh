@@ -186,8 +186,8 @@ while IFS='|' read -r city region country timezone country_code favourite
     city_date=$(TZ=$timezoneOpposite date $setTimeOptionArguments +"%A, %d %B %Y" )
 
     #Determine flag icon
-    country_flag="$(echo "$country_code" | tr '[:upper:]' '[:lower:]')"
-    flag_icon="${country_flag}_64.png"
+    flag_code="$(echo "$country_code" | tr '[:upper:]' '[:lower:]')"
+    flag_icon="${flag_code}_64.png"
     if [[ ! -e "./flags/$flag_icon" ]]; then
         flag_icon="_no_flag.png"
     fi
@@ -202,7 +202,9 @@ while IFS='|' read -r city region country timezone country_code favourite
         sortkey=$(printf "%03d" $(( 10#$sortkey + 1 )))
     fi
 
-    if [[ "$city" == "$region" ]] || [[ -z $region ]]; then
+    if [[ -z $country ]] && [[ -z $region ]]; then
+        item_title="$sourceTimezone_string$city_time - $city $favourite_string"
+    elif [[ "$city" == "$region" ]] || [[ -z $region ]]; then
         item_title="$sourceTimezone_string$city_time - $city, $country $favourite_string"
     else
         item_title="$sourceTimezone_string$city_time - $city, $region, $country $favourite_string"  

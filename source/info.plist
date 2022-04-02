@@ -395,10 +395,12 @@ city=${arg[2]}
 region=${arg[3]}
 country=${arg[4]}
 
-if [[ "$city" == "$region" ]] || [[ -z $region ]]; then
-	echo "$time ($city, $country)"
+if [[ -z $country ]] || [[ -z $region ]]; then
+	printf "$time ($city)"
+elif [[ "$city" == "$region" ]] || [[ -z $region ]]; then
+	printf "$time ($city, $country)"
 else
-	echo "$time ($city, $region, $country)"
+	printf "$time ($city, $region, $country)"
 fi</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>

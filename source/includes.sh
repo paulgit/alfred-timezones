@@ -39,11 +39,14 @@ shopt -s expand_aliases
 #Case-insensitive matching
 shopt -s nocasematch
 
+#Create preferences folder if it does not exist
+[[ ! -d  "$TZPREFS" ]] && mkdir -p "$TZPREFS" 2>/dev/null
 #Does the file actually exist?
 if [ ! -e "$timezone_file" ]; then
 	#If not, recreate it from defaults
 	cp default_timezones.txt "$timezone_file"
 fi
+tz
 
 # Create an empty file (extra configuration) if it does not exist
 

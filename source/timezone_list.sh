@@ -196,9 +196,8 @@ while IFS='|' read -r city country timezone country_code favourite
     city_date=$(TZ=$timezoneOpposite date $setTimeOptionArguments +"%A, %d %B %Y" )
 
     #Determine flag icon
-    country_flag="$(echo "$country" | tr '[A-Z]' '[a-z]')"
-    country_flag="${country_flag// /_}"
-    flag_icon="$country_flag.png"
+    country_flag="$(echo "$country_code" | tr '[:upper:]' '[:lower:]')"
+    flag_icon="${country_flag}_64.png"
     if [[ ! -e "./flags/$flag_icon" ]]; then
         flag_icon="_no_flag.png"
     fi

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>carlosnz.timezones2</string>
+	<string>com.github.paulgit.alfredtimezones</string>
 	<key>connections</key>
 	<dict>
 		<key>16D7BCC0-AD0A-49B7-98F2-5FC3444910B1</key>
@@ -366,7 +366,7 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string>Carl Smith (@CarlosNZ). Updated by Jarek Hartman</string>
+	<string>Paul Git (@paulgit)</string>
 	<key>description</key>
 	<string>A World Clock for Alfred</string>
 	<key>disabled</key>
@@ -1625,8 +1625,8 @@ v1.0
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>2.40</string>
+	<string>3.00</string>
 	<key>webaddress</key>
-	<string>https://jhartman.pl/tag/time-zones/</string>
+	<string>https://github.com/paulgit/alfred-timezones</string>
 </dict>
 </plist>

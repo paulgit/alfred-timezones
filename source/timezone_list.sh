@@ -203,9 +203,9 @@ while IFS='|' read -r city region country timezone country_code favourite
     fi
 
     if [[ "$city" == "$region" ]] || [[ -z $region ]]; then
-        item_title="$sourceTimezone_string$city_time $city $favourite_string"
+        item_title="$sourceTimezone_string$city_time - $city, $country $favourite_string"
     else
-        item_title="$sourceTimezone_string$city_time $city, $region $favourite_string"  
+        item_title="$sourceTimezone_string$city_time - $city, $region, $country $favourite_string"  
     fi
 
     if [[ "$CLIPBOARD_DATE" == "Off" ]]; then
@@ -219,7 +219,7 @@ while IFS='|' read -r city region country timezone country_code favourite
         echo "<!--$sortkey-->\
               <item arg=\"$item_arg\" valid=\"yes\">\
                   <title>$item_title</title>\
-                  <subtitle>$city_date • ${country} • $timezone</subtitle>\
+                  <subtitle>$city_date • $timezone</subtitle>\
                   <icon>./flags/$flag_icon</icon>\
               </item>"
     fi

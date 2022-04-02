@@ -1,4 +1,4 @@
-London|United Kingdom|Europe/London|GB|1
-New Delhi|India|Asia/Kolkata|IN|1
-New York|United States|America/New_York|US|1
-Warsaw|Poland|Europe/Warsaw|PL|1
+Hamburg|Hamburg|Germany|Europe/Berlin|DE|0
+London|England|United Kingdom|Europe/London|GB|1
+Malmo|Skåne|Sweden|Europe/Stockholm|SE|1
+Melbourne|Victoria|Australia|Australia/Melbourne|AU|1

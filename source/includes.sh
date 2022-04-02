@@ -58,3 +58,4 @@ fi
 
 TIME_FORMAT=$(getPreference "TIME_FORMAT" "24h" )
 SORTING=$(getPreference "SORTING" "y" )
+CLIPBOARD_DATE=$(getPreference "CLIPBOARD_DATE" "Off" )
